@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: VoronoiUnlitMaterial
-  m_Shader: {fileID: 4800000, guid: 345925262a7a0e34ab407bd249e39aba, type: 3}
+  m_Shader: {fileID: 4800000, guid: dd0bb74e9737e3747870f06c769b1669, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -22,5 +22,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - _NUMOFPOINTS: 24
     m_Colors: []

@@ -40,9 +40,9 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.38
+    value: 0
   fastMode:
-    overrideState: 0
+    overrideState: 1
     value: 0
 --- !u!114 &114263041689418464
 MonoBehaviour:
@@ -81,7 +81,7 @@ MonoBehaviour:
     overrideState: 0
     value: {r: 0, g: 0, b: 2, a: 1}
   fastMode:
-    overrideState: 0
+    overrideState: 1
     value: 1
   dirtTexture:
     overrideState: 0

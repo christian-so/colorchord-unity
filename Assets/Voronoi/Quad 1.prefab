@@ -21,8 +21,7 @@ GameObject:
   - component: {fileID: 4595381304538318}
   - component: {fileID: 33385509713918444}
   - component: {fileID: 23023816783298246}
-  - component: {fileID: 114978023483597022}
-  - component: {fileID: 114361270066831610}
+  - component: {fileID: 114317772672313708}
   m_Layer: 0
   m_Name: Quad 1
   m_TagString: Untagged
@@ -58,7 +57,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d60408a338eaf58469b4b4149b407638, type: 2}
+  - {fileID: 2100000, guid: 266c3bc3bba035c4d92b8e275b64a07c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,7 +84,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561066971669642}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114361270066831610
+--- !u!114 &114317772672313708
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,50 +92,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1561066971669642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4987d93e91bfa274fac7161b2660aab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114978023483597022
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1561066971669642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b72ffd1812dedad49985e1383e6f0c0f, type: 3}
+  m_Script: {fileID: 11500000, guid: ee993d83e98971742a7498e46781d697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fullCircles: 0
   minRadius: -0.5
   maxRadius: 0.5
-  epsilon: 0.0001
+  epsilon: 0.00001
   topBins: 24
-  colors:
-  - {r: 0.7, g: 0, b: 0, a: 1}
-  - {r: 0.7, g: 0.175, b: 0, a: 1}
-  - {r: 0.7, g: 0.35, b: 0, a: 1}
-  - {r: 0.7, g: 0.525, b: 0, a: 1}
-  - {r: 0.7, g: 0.7, b: 0, a: 1}
-  - {r: 0.525, g: 0.7, b: 0, a: 1}
-  - {r: 0.35, g: 0.7, b: 0, a: 1}
-  - {r: 0.175, g: 0.7, b: 0, a: 1}
-  - {r: 0, g: 0.7, b: 0, a: 1}
-  - {r: 0, g: 0.7, b: 0.175, a: 1}
-  - {r: 0, g: 0.7, b: 0.35, a: 1}
-  - {r: 0, g: 0.7, b: 0.525, a: 1}
-  - {r: 0, g: 0.7, b: 0.7, a: 1}
-  - {r: 0, g: 0.525, b: 0.7, a: 1}
-  - {r: 0, g: 0.35, b: 0.7, a: 1}
-  - {r: 0, g: 0.175, b: 0.7, a: 1}
-  - {r: 0, g: 0, b: 0.7, a: 1}
-  - {r: 0.175, g: 0, b: 0.7, a: 1}
-  - {r: 0.35, g: 0, b: 0.7, a: 1}
-  - {r: 0.525, g: 0, b: 0.7, a: 1}
-  - {r: 0.7, g: 0, b: 0.7, a: 1}
-  - {r: 0.7, g: 0, b: 0.525, a: 1}
-  - {r: 0.7, g: 0, b: 0.35, a: 1}
-  - {r: 0.7, g: 0, b: 0.175, a: 1}
+  colors: []
   ShowDebugSpheres: 0
-  PointPrefab: {fileID: 1953193838537416, guid: 4f58813be2e65594b830eb2e68b2de21,
-    type: 2}
+  PointPrefab: {fileID: 0}
