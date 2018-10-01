@@ -34,7 +34,7 @@ public class PlaceVoronoiPoints : MonoBehaviour {
     public float maxRadius = 0.5f;
     public float epsilon = 0.5f;
     public int topBins = 5;
-
+    public int port = 5518;
 
     public Color[] colors = null;
 
@@ -59,7 +59,7 @@ public class PlaceVoronoiPoints : MonoBehaviour {
             }
         }
 
-        receiver = new UDPColorchordReceiver(5518);
+        receiver = new UDPColorchordReceiver(port);
         receiver.Start();
 
         mr = GetComponent<MeshRenderer>();
@@ -93,15 +93,13 @@ public class PlaceVoronoiPoints : MonoBehaviour {
                 Destroy(transform.GetChild(i).gameObject);
             }
         }
-        //fullCircles = 0;
+
         for (int i = 0; i < rawdata.Length; i++)
         {
             if (rawdata[i] > epsilon || rawdata[i] < -epsilon) // != 0
                 data.Add(new DataModelBins(i, rawdata[i]));
-            //fullCircles += i * rawdata[i];
         }
-        //fullCircles = -fullCircles / 1000.0f;
-        //data.Sort((x,y) => { return -x.amplitude.CompareTo(y.amplitude);});
+
         int bins = Math.Min(topBins, data.Count);
         amplitudesSum = 0;
         for (int i = 0; i < bins; i++)
@@ -127,7 +125,7 @@ public class PlaceVoronoiPoints : MonoBehaviour {
             voronoiPoints[5 * i + 2] = col.r;
             voronoiPoints[5 * i + 3] = col.g;
             voronoiPoints[5 * i + 4] = col.b;
-            //Debug.Log(string.Format("data {0} -> value {1}", i, data[i].amplitude));
+
             if (ShowDebugSpheres)
             {
                 var Point = Instantiate<GameObject>(PointPrefab, transform);
@@ -137,120 +135,6 @@ public class PlaceVoronoiPoints : MonoBehaviour {
         }
         mr.material.SetFloatArray("voronoiPoints", voronoiPoints);
         mr.material.SetInt("_NUMOFPOINTS", bins);
-    }
-
-    void placePointsFoldedBinsDumb(){
-        float amplitudesSum = 0, amplitudesMax = 0;
-        float[] voronoiPoints = new float[rawdata.Length*5];
-        Vector3 coords = new Vector3();
-        float usedRadian = 0;
-        float h, s, v;
-        if (ShowDebugSpheres)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
-        }
-        for (int i = 0; i < rawdata.Length; i++)
-        {
-            amplitudesSum += rawdata[i];
-            amplitudesMax = Mathf.Max(amplitudesMax, rawdata[i]);
-        }
-        amplitudesSum = amplitudesSum <= 0 ? 1 : amplitudesSum;
-        //Debug.Log("Sum: " + amplitudesSum);
-        for (int i = 0; i < rawdata.Length; i++)
-        {
-            rawdata[i] /= amplitudesSum;
-            coords = calcAmplitudesToCoords(usedRadian + (0.5f * rawdata[i]));
-            usedRadian += rawdata[i];
-
-            Color.RGBToHSV(colors[i], out h, out s, out v);
-            v = rawdata[i] / amplitudesMax; // highest amp in this frame gets value 1
-            Color col = Color.HSVToRGB(h, s, v);
-
-            voronoiPoints[5 * i] = coords.x;
-            voronoiPoints[5 * i + 1] = coords.y;
-            voronoiPoints[5 * i + 2] = col.r;
-            voronoiPoints[5 * i + 3] = col.g;
-            voronoiPoints[5 * i + 4] = col.b;
-            //Debug.Log(string.Format("data {0} -> value {1}", i, rawdata[i]));
-            if (ShowDebugSpheres)
-            {
-                var Point = Instantiate<GameObject>(PointPrefab, transform);
-                Point.transform.localPosition = coords;
-                Point.GetComponent<MeshRenderer>().material.color = new Color(voronoiPoints[5 * i + 2], voronoiPoints[5 * i + 3], voronoiPoints[5 * i + 4], 1);
-            }
-        }
-        mr.material.SetFloatArray("voronoiPoints", voronoiPoints);
-        mr.material.SetInt("_NUMOFPOINTS", rawdata.Length);
-    }
-
-    void placePointsAmpNotePosition() {
-        if (ShowDebugSpheres)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
-        }
-
-        // buildRelativeAmplitudes(amplitudes, out maxAmplitude);
-
-        // index -> (noteposition, amplitude)
-        // i*2 -> notepositon, i*2+1 -> amplitude
-        List<DataModel> data = new List<DataModel>(rawdata.Length / 2);
-
-        float maxAmplitude = 0;
-        float amplitudeSum = 0;
-        
-
-        for (int i = 0; i < rawdata.Length / 2; i++)
-        {
-            if(rawdata[i*2+1] > epsilon || rawdata[i * 2 + 1] < -epsilon) // != 0
-            {
-                data.Add(new DataModel(rawdata[i * 2], rawdata[i * 2 + 1]));
-                amplitudeSum += rawdata[i * 2 + 1];
-                maxAmplitude = (maxAmplitude < rawdata[i * 2 + 1]) ? rawdata[i * 2 + 1] : maxAmplitude;
-            }
-        }
-        data.Sort((x, y) => { return x.notePosition.CompareTo(y.notePosition); });
-
-        Vector3 coords = new Vector3();
-        float[] voronoiPoints = new float[(rawdata.Length / 2) * 5]; // x, y, r, g, b
-        float usedRadian = 0;
-        float h, s, v;
-        int colorIndex;
-        for (int i = 0; i < data.Count; i++)
-        {
-            data[i] = new DataModel(data[i].notePosition, data[i].amplitude/amplitudeSum);
-
-            coords = calcAmplitudesToCoords(usedRadian + (0.5f * data[i].amplitude));
-            usedRadian += data[i].amplitude;
-
-            colorIndex = (int)Mathf.Floor(((data[i].notePosition +  120) * 12 + Time.timeSinceLevelLoad * 0.2f) % 12); // notePositions[i] has been seen to go down to -100
-
-            Color.RGBToHSV(colors[colorIndex], out h, out s, out v); 
-            v = data[i].amplitude / maxAmplitude; // highest amp in this frame gets value 1
-            Color col = Color.HSVToRGB(h, s, v);
-
-            voronoiPoints[5 * i] = coords.x;
-            voronoiPoints[5 * i + 1] = coords.y;
-            voronoiPoints[5 * i + 2] = col.r;
-            voronoiPoints[5 * i + 3] = col.g;
-            voronoiPoints[5 * i + 4] = col.b;
-
-            if (ShowDebugSpheres)
-            {
-                var Point = Instantiate<GameObject>(PointPrefab, transform);
-                Point.transform.localPosition = coords;
-                Point.GetComponent<MeshRenderer>().material.color = new Color(voronoiPoints[5 * i + 2], voronoiPoints[5 * i + 3], voronoiPoints[5 * i + 4], 1);
-            }
-
-        }
-        
-        mr.material.SetFloatArray("voronoiPoints", voronoiPoints);
-        mr.material.SetInt("_NUMOFPOINTS", data.Count);
     }
 
     Vector3 calcAmplitudesToCoords(float partOfCircle){
