@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1561066971669642}
+  m_IsPrefabAsset: 1
+--- !u!1 &1561066971669642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4595381304538318}
+  - component: {fileID: 33385509713918444}
+  - component: {fileID: 23023816783298246}
+  - component: {fileID: 114978023483597022}
+  - component: {fileID: 114361270066831610}
+  m_Layer: 0
+  m_Name: Quad 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4595381304538318
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561066971669642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.159499, y: 2.2471309, z: 0.3923421}
+  m_LocalScale: {x: 1.5817, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23023816783298246
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561066971669642}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: d60408a338eaf58469b4b4149b407638, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &33385509713918444
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561066971669642}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114361270066831610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561066971669642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4987d93e91bfa274fac7161b2660aab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114978023483597022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1561066971669642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72ffd1812dedad49985e1383e6f0c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullCircles: 0
+  minRadius: -0.5
+  maxRadius: 0.5
+  epsilon: 0.0001
+  topBins: 24
+  colors:
+  - {r: 0.7, g: 0, b: 0, a: 1}
+  - {r: 0.7, g: 0.175, b: 0, a: 1}
+  - {r: 0.7, g: 0.35, b: 0, a: 1}
+  - {r: 0.7, g: 0.525, b: 0, a: 1}
+  - {r: 0.7, g: 0.7, b: 0, a: 1}
+  - {r: 0.525, g: 0.7, b: 0, a: 1}
+  - {r: 0.35, g: 0.7, b: 0, a: 1}
+  - {r: 0.175, g: 0.7, b: 0, a: 1}
+  - {r: 0, g: 0.7, b: 0, a: 1}
+  - {r: 0, g: 0.7, b: 0.175, a: 1}
+  - {r: 0, g: 0.7, b: 0.35, a: 1}
+  - {r: 0, g: 0.7, b: 0.525, a: 1}
+  - {r: 0, g: 0.7, b: 0.7, a: 1}
+  - {r: 0, g: 0.525, b: 0.7, a: 1}
+  - {r: 0, g: 0.35, b: 0.7, a: 1}
+  - {r: 0, g: 0.175, b: 0.7, a: 1}
+  - {r: 0, g: 0, b: 0.7, a: 1}
+  - {r: 0.175, g: 0, b: 0.7, a: 1}
+  - {r: 0.35, g: 0, b: 0.7, a: 1}
+  - {r: 0.525, g: 0, b: 0.7, a: 1}
+  - {r: 0.7, g: 0, b: 0.7, a: 1}
+  - {r: 0.7, g: 0, b: 0.525, a: 1}
+  - {r: 0.7, g: 0, b: 0.35, a: 1}
+  - {r: 0.7, g: 0, b: 0.175, a: 1}
+  ShowDebugSpheres: 0
+  PointPrefab: {fileID: 1953193838537416, guid: 4f58813be2e65594b830eb2e68b2de21,
+    type: 2}
