@@ -17,7 +17,7 @@ public class startDebugDisplay : MonoBehaviour {
                     int port;
                     if(int.TryParse(strs[1], out port) && voronoi != null)
                     {
-                        voronoi.port = port;
+                        //voronoi.port = port;
                     }
                 }
             }

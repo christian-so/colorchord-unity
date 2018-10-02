@@ -35,9 +35,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561066971669642}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.159499, y: 2.2471309, z: 0.3923421}
-  m_LocalScale: {x: 1.5817, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.9183421}
+  m_LocalScale: {x: 1.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,11 +95,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee993d83e98971742a7498e46781d697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullCircles: 0
+  ColorchordUdpInputPort: 5518
+  LEDOutPort: 5519
+  ledCount: 10
   minRadius: -0.5
   maxRadius: 0.5
-  epsilon: 0.00001
-  topBins: 24
-  colors: []
+  circles: 0
   ShowDebugSpheres: 0
   PointPrefab: {fileID: 0}
