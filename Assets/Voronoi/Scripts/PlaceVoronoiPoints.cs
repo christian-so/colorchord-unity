@@ -98,22 +98,26 @@ public class PlaceVoronoiPoints : MonoBehaviour {
 
         for (int i = 0; i < preparedData.Length; i++) {
             preparedData[i] /= sumOfWidth;
-            if (i < preparedData.Length - 1) {
-                leds = (int)(preparedData[i] * ledCount);
-            }
-            else {
-                leds = ledCount - ledsUsed;
-            }
+            
+            leds = (int)Mathf.Round(preparedData[i] * ledCount);
+            leds = Math.Min(leds, ledCount - ledsUsed);
+
             Color.RGBToHSV(data[i].color, out h, out s, out v);
             color = Color.HSVToRGB(h, s, 0.6f + 0.4f*v);
-            for (int j = 0; j < leds; j++) {
 
+            for (int j = 0; j < leds; j++) {
                 outData[3 * (ledsUsed + j)] = (byte)(255 * color.r);
                 outData[3 * (ledsUsed + j) + 1] = (byte)(255 * color.g);
                 outData[3 * (ledsUsed + j) + 2] = (byte)(255 * color.b);
-
             }
             ledsUsed += leds;
+        }
+
+        leds = ledCount - ledsUsed;
+        for (int j = 0; j < leds; j++) {
+            outData[3 * (ledsUsed + j)] = 0x00;
+            outData[3 * (ledsUsed + j) + 1] = 0x00;
+            outData[3 * (ledsUsed + j) + 2] = 0x00;
         }
 
         LEDDataChannel.SendAsync(outData, outData.Length, LedDestination);
