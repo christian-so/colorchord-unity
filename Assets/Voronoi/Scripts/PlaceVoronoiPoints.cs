@@ -20,6 +20,7 @@ public class PlaceVoronoiPoints : MonoBehaviour {
     [Header("LED Output")]
     public int LEDOutPort;
     public int ledCount;
+    public float widthExponent = 3;
     UdpClient LEDDataChannel;
 
     // Shader
@@ -32,7 +33,7 @@ public class PlaceVoronoiPoints : MonoBehaviour {
     MeshRenderer mr = null;
     float twoTimesPi = 2 * Mathf.PI;
 
-    IPEndPoint LEDdestination;
+    IPEndPoint LedDestination;
 
     // Use this for initialization
     void Start() {
@@ -47,8 +48,8 @@ public class PlaceVoronoiPoints : MonoBehaviour {
         receiver = new UDPColorchordReceiver(ColorchordUdpInputPort, colorCount);
         receiver.Start();
 
-        LEDdestination = new IPEndPoint(IPAddress.Loopback, LEDOutPort);
-        LEDDataChannel = new UdpClient(LEDOutPort+1);
+        LedDestination = new IPEndPoint(IPAddress.Loopback, LEDOutPort);
+        LEDDataChannel = new UdpClient(LEDOutPort + 1);
 
         mr = GetComponent<MeshRenderer>();
     }
@@ -84,26 +85,38 @@ public class PlaceVoronoiPoints : MonoBehaviour {
 
     void SendLedData() {
         byte[] outData = new byte[ledCount * 3]; //RGB for every Led in 0..255
-        int ledsUsed = 0;
+        float[] preparedData = new float[data.Length];
+        float sumOfWidth = 0;
         int leds;
-        for (int i = 0; i < data.Length; i++) {
-            if (i < data.Length - 1) {
-                leds = (int)Mathf.Round(data[i].width * ledCount);
+        int ledsUsed = 0;
+        Color color;
+        float h, s, v;
+        for (int i = 0; i < preparedData.Length; i++) {
+            preparedData[i] = Mathf.Pow(data[i].width, widthExponent);
+            sumOfWidth += preparedData[i];
+        }
+
+        for (int i = 0; i < preparedData.Length; i++) {
+            preparedData[i] /= sumOfWidth;
+            if (i < preparedData.Length - 1) {
+                leds = (int)(preparedData[i] * ledCount);
             }
             else {
                 leds = ledCount - ledsUsed;
             }
+            Color.RGBToHSV(data[i].color, out h, out s, out v);
+            color = Color.HSVToRGB(h, s, 0.6f + 0.4f*v);
             for (int j = 0; j < leds; j++) {
-                
-                outData[3 * (ledsUsed + j)] = (byte)(255 * data[i].color.r);
-                outData[3 * (ledsUsed + j) + 1] = (byte)(255 * data[i].color.g);
-                outData[3 * (ledsUsed + j) + 2] = (byte)(255 * data[i].color.b);
+
+                outData[3 * (ledsUsed + j)] = (byte)(255 * color.r);
+                outData[3 * (ledsUsed + j) + 1] = (byte)(255 * color.g);
+                outData[3 * (ledsUsed + j) + 2] = (byte)(255 * color.b);
 
             }
             ledsUsed += leds;
         }
 
-        LEDDataChannel.SendAsync(outData,outData.Length, LEDdestination);
+        LEDDataChannel.SendAsync(outData, outData.Length, LedDestination);
     }
 
     void SendShaderData() {
