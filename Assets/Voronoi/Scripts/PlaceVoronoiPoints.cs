@@ -23,6 +23,11 @@ public class PlaceVoronoiPoints : MonoBehaviour {
     public float widthExponent = 3;
     UdpClient LEDDataChannel;
 
+
+    // DMX Output
+    [Header("DMX Output")]
+    public int lampCount;
+
     // Shader
     [Header("Shader Output")]
     public float minRadius;
@@ -51,6 +56,10 @@ public class PlaceVoronoiPoints : MonoBehaviour {
         LedDestination = new IPEndPoint(IPAddress.Loopback, LEDOutPort);
         LEDDataChannel = new UdpClient(LEDOutPort + 1);
 
+        //Debug.Log(openDMXSO.init());
+        OpenDMX.start();
+        Debug.Log(OpenDMX.status);
+
         mr = GetComponent<MeshRenderer>();
     }
 
@@ -58,6 +67,7 @@ public class PlaceVoronoiPoints : MonoBehaviour {
     void Update() {
         DataPreperator();
         SendLedData();
+        SendDMXData();
         SendShaderData();
     }
 
@@ -98,12 +108,12 @@ public class PlaceVoronoiPoints : MonoBehaviour {
 
         for (int i = 0; i < preparedData.Length; i++) {
             preparedData[i] /= sumOfWidth;
-            
+
             leds = (int)Mathf.Round(preparedData[i] * ledCount);
             leds = Math.Min(leds, ledCount - ledsUsed);
 
             Color.RGBToHSV(data[i].color, out h, out s, out v);
-            color = Color.HSVToRGB(h, s, 0.6f + 0.4f*v);
+            color = Color.HSVToRGB(h, s, 0.6f + 0.4f * v);
 
             for (int j = 0; j < leds; j++) {
                 outData[3 * (ledsUsed + j)] = (byte)(255 * color.r);
@@ -122,7 +132,59 @@ public class PlaceVoronoiPoints : MonoBehaviour {
 
         LEDDataChannel.SendAsync(outData, outData.Length, LedDestination);
     }
+    void SendDMXData() {
+        float[] preparedData = new float[data.Length];
+        float sumOfWidth = 0;
+        int lamps;
+        int lampsUsed = 0;
+        Color color;
+        float h, s, v;
+        for (int i = 0; i < preparedData.Length; i++) {
+            preparedData[i] = Mathf.Pow(data[i].width, widthExponent);
+            sumOfWidth += preparedData[i];
+        }
 
+        for (int i = 0; i < preparedData.Length; i++) {
+            preparedData[i] /= sumOfWidth;
+
+            lamps = (int)Mathf.Round(preparedData[i] * lampCount);
+            lamps = Math.Min(lamps, lampCount - lampsUsed);
+
+            Color.RGBToHSV(data[i].color, out h, out s, out v);
+            color = Color.HSVToRGB(h, s, 0.6f + 0.4f * v);
+
+            for (int j = 0; j < lamps; j++) {
+                OpenDMX.setDmxValue(6 * (lampsUsed + j), (byte)(255 * color.r));
+                OpenDMX.setDmxValue(6 * (lampsUsed + j) + 1, (byte)(255 * color.g));
+                OpenDMX.setDmxValue(6 * (lampsUsed + j) + 2, (byte)(255 * color.b));
+
+                //openDMXSO.buffer[4 * (lampsUsed + j) +1] = (byte)(255 * color.r);
+                //openDMXSO.buffer[4 * (lampsUsed + j) + 1 + 1] = (byte)(255 * color.g);
+                //openDMXSO.buffer[4 * (lampsUsed + j) + 2 + 1] = (byte)(255 * color.b);
+                //openDMXSO.buffer[4 * (lampsUsed + j) + 3 + 1] = 0x00; //RGBW - White is never used1
+            }
+            lampsUsed += lamps;
+        }
+    }
+
+    void SendDMXTestData() {
+        OpenDMX.setDmxValue(0, 0x00);
+        OpenDMX.setDmxValue(1, 0xFF);
+        OpenDMX.setDmxValue(2, 0x00);
+
+        OpenDMX.setDmxValue(4, 0x00);
+        OpenDMX.setDmxValue(5, 0xAA);
+        OpenDMX.setDmxValue(6, 0xFF);
+    }
+    void SendDMXSOTestData() {
+        openDMXSO.setDmxValue(0, 0xFF);
+        openDMXSO.setDmxValue(1, 0xAA);
+        openDMXSO.setDmxValue(2, 0x00);
+
+        openDMXSO.setDmxValue(4, 0x00);
+        openDMXSO.setDmxValue(5, 0xAA);
+        openDMXSO.setDmxValue(6, 0xFF);
+    }
     void SendShaderData() {
         float[] voronoiPoints = new float[data.Length * 5];
         Vector3 coords = new Vector3();
@@ -160,5 +222,7 @@ public class PlaceVoronoiPoints : MonoBehaviour {
     private void OnDestroy() {
         receiver.Stop();
         LEDDataChannel.Close();
+        openDMXSO.stop();
+        OpenDMX.stop();
     }
 }

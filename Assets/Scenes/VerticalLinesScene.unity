@@ -421,6 +421,11 @@ Prefab:
       propertyPath: ledCount
       value: 75
       objectReference: {fileID: 0}
+    - target: {fileID: 114317772672313708, guid: 64c760d919d319d4ab2d57a7eab2a1d4,
+        type: 2}
+      propertyPath: lampCount
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64c760d919d319d4ab2d57a7eab2a1d4, type: 2}
   m_IsPrefabAsset: 0
