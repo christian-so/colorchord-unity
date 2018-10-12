@@ -277,6 +277,22 @@ MonoBehaviour:
   requiresDepthTexture: 1
   requiresColorTexture: 1
   m_Version: 1
+--- !u!1 &593450111 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1561066971669642, guid: 64c760d919d319d4ab2d57a7eab2a1d4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1916593573}
+--- !u!114 &593450114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 593450111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14764190d9c1cff458dd6cebbb460c98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &766472287
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +440,7 @@ Prefab:
     - target: {fileID: 114317772672313708, guid: 64c760d919d319d4ab2d57a7eab2a1d4,
         type: 2}
       propertyPath: lampCount
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64c760d919d319d4ab2d57a7eab2a1d4, type: 2}

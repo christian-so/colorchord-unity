@@ -154,9 +154,9 @@ public class PlaceVoronoiPoints : MonoBehaviour {
             color = Color.HSVToRGB(h, s, 0.6f + 0.4f * v);
 
             for (int j = 0; j < lamps; j++) {
-                OpenDMX.setDmxValue(6 * (lampsUsed + j), (byte)(255 * color.r));
-                OpenDMX.setDmxValue(6 * (lampsUsed + j) + 1, (byte)(255 * color.g));
-                OpenDMX.setDmxValue(6 * (lampsUsed + j) + 2, (byte)(255 * color.b));
+                OpenDMX.setDmxValue(4 * (lampsUsed + j), (byte)(255 * color.r));
+                OpenDMX.setDmxValue(4 * (lampsUsed + j) + 1, (byte)(255 * color.g));
+                OpenDMX.setDmxValue(4 * (lampsUsed + j) + 2, (byte)(255 * color.b));
 
                 //openDMXSO.buffer[4 * (lampsUsed + j) +1] = (byte)(255 * color.r);
                 //openDMXSO.buffer[4 * (lampsUsed + j) + 1 + 1] = (byte)(255 * color.g);
